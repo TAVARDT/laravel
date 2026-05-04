@@ -1,7 +1,6 @@
 {
   "name": "tavardt/laravel-security",
   "description": "Elite B2B Security Middleware for Laravel Applications — TAVARDT Agency",
-  "version": "1.0.0",
   "type": "library",
   "keywords": ["laravel", "security", "middleware", "headers", "hsts", "csp", "tavardt"],
   "homepage": "https://ag.tavardt.com",
