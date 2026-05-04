@@ -36,4 +36,4 @@ jobs:
           curl -i -X POST \
           -u "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
-          https://composer.pkg.github.com/tavardt/laravel
+          https://composer.pkg.github.com/${{ github.repository }}
