@@ -1,0 +1,34 @@
+name: Validate Composer Package 🇺🇸 / Validar Pacote Composer 🇧🇷
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  validate-composer:
+    runs-on: ubuntu-latest
+    name: Validate & Lint Composer Package
+
+    steps:
+      - name: Checkout repository 🇺🇸 / Baixar repositório 🇧🇷
+        uses: actions/checkout@v4
+
+      - name: Setup PHP 🇺🇸 / Configurar PHP 🇧🇷
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      - name: Validate composer.json 🇺🇸 / Validar composer.json 🇧🇷
+        run: composer validate --strict
+
+      - name: Install dependencies 🇺🇸 / Instalar dependências 🇧🇷
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Confirm package structure 🇺🇸 / Confirmar estrutura 🇧🇷
+        run: |
+          echo "Package: tavardt/laravel-security"
+          echo "Autoload namespace: Tavardt\\LaravelSecurity\\"
+          ls -la src/
