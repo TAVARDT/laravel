@@ -1,5 +1,5 @@
 {
-    "name": "tavardt/laravel",
+    "name": "tavardt/laravel-security",
     "description": "Middleware de segurança elite para aplicações Laravel TAVARDT",
     "type": "library",
     "license": "MIT",
