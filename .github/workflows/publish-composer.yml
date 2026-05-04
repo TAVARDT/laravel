@@ -1,34 +1,39 @@
-name: Validate Composer Package 🇺🇸 / Validar Pacote Composer 🇧🇷
+name: Publish Composer Package
 
 on:
   push:
     branches:
       - main
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 jobs:
-  validate-composer:
+  publish:
     runs-on: ubuntu-latest
-    name: Validate & Lint Composer Package
+    permissions:
+      contents: read
+      packages: write
 
     steps:
-      - name: Checkout repository 🇺🇸 / Baixar repositório 🇧🇷
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup PHP 🇺🇸 / Configurar PHP 🇧🇷
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           tools: composer:v2
 
-      - name: Validate composer.json 🇺🇸 / Validar composer.json 🇧🇷
+      - name: Validate composer.json
         run: composer validate --strict
 
-      - name: Install dependencies 🇺🇸 / Instalar dependências 🇧🇷
+      - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
-      - name: Confirm package structure 🇺🇸 / Confirmar estrutura 🇧🇷
+      - name: Publish to GitHub Packages
         run: |
-          echo "Package: tavardt/laravel-security"
-          echo "Autoload namespace: Tavardt\\LaravelSecurity\\"
-          ls -la src/
+          curl -X POST \
+            -u "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://composer.pkg.github.com/TAVARDT/laravel
