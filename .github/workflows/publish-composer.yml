@@ -2,38 +2,39 @@ name: Publish Composer Package
 
 on:
   push:
-    branches:
-      - main
-    tags:
-      - 'v*'
-  workflow_dispatch:
+      branches:
+            - main
+                tags:
+                      - 'v*'
+                        workflow_dispatch:
 
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+                        jobs:
+                          publish:
+                              runs-on: ubuntu-latest
+                                  permissions:
+                                        contents: read
+                                              packages: write
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+                                                  steps:
+                                                        - name: Checkout repository
+                                                                uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          tools: composer:v2
-
-      - name: Validate composer.json
-        run: composer validate --strict
-
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction
-
-      - name: Publish to GitHub Packages
-        run: |
-          curl -X POST \
-            -u "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://composer.pkg.github.com/TAVARDT/laravel
+                                                                      - name: Setup PHP
+                                                                              uses: shivammathur/setup-php@v2
+                                                                                      with:
+                                                                                                php-version: '8.2'
+                                                                                                          tools: composer:v2
+                                                                                                          
+                                                                                                                - name: Validate composer.json
+                                                                                                                        run: composer validate --strict
+                                                                                                                        
+                                                                                                                              - name: Install dependencies
+                                                                                                                                      run: composer install --prefer-dist --no-progress --no-interaction
+                                                                                                                                      
+                                                                                                                                            - name: Publish to GitHub Packages
+                                                                                                                                                    run: |
+                                                                                                                                                              curl -i -X POST \
+                                                                                                                                                                        -u "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
+                                                                                                                                                                                  -H "Accept: application/vnd.github.v3+json" \
+                                                                                                                                                                                            https://composer.pkg.github.com/tavardt/laravel
+                                                                                                                                                                                            
